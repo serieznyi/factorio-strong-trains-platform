@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+    -h | --help)
+      cat <<EOF
+
+                Pack mod files in zip archive.
+
+                Keys:
+
+                -c or --copy <DIR_PATH> - copy taken archive to <DIR_PATH>
+EOF
+      exit 0
+    ;;
+    -c|--copy)
+      COPY_TO="$2"
+
+      if [ -z "$COPY_TO" ]
+      then
+        printf "Copy destination is empty\n"
+        exit 1
+      fi
+
+      if [ -d "$COPY_TO" ]
+      then
+        printf "Zip will be copied to %s\n\n" "$COPY_TO"
+      else
+        printf "Copy destination is not dir: %s\n" "$COPY_TO"
+        exit 1
+      fi
+
+      shift # past argument
+      shift # past value
+      ;;
+    *)    # unknown option
+      POSITIONAL+=("$1") # save it in an array for later
+      shift # past argument
+      ;;
+  esac
+done
+
+readonly ROOT_DIR=$( cd $(dirname $0)/../.. ; pwd -P )
+
+readonly SRC_DIR=$( cd "${ROOT_DIR}/src" ; pwd -P )
+
+readonly RUNTIME_DIR="${ROOT_DIR}/tmp"
+
+function readJson {
+  UNAMESTR=`uname`
+  if [[ "$UNAMESTR" == 'Linux' ]]; then
+    SED_EXTENDED='-r'
+  elif [[ "$UNAMESTR" == 'Darwin' ]]; then
+    SED_EXTENDED='-E'
+  fi;
+
+  VALUE=`grep -m 1 "\"${2}\"" ${1} | sed ${SED_EXTENDED} 's/^ *//;s/.*: *"//;s/",?//'`
+
+  if [ ! "$VALUE" ]; then
+    echo "Error: Cannot find \"${2}\" in ${1}" >&2;
+    exit 1;
+  else
+    echo $VALUE ;
+  fi;
+}
+
+VERSION=$(readJson "$SRC_DIR/info.json" version)
+NAME=$(readJson "$SRC_DIR/info.json" name)
+
+mkdir -p "$RUNTIME_DIR"
+
+NEW_BUILD_DIR_NAME="${NAME}_${VERSION}"
+NEW_BUILD_DIR_PATH="${RUNTIME_DIR}/${NEW_BUILD_DIR_NAME}"
+
+rm -Rf "$NEW_BUILD_DIR_PATH"
+
+cp -r "$SRC_DIR" "$NEW_BUILD_DIR_PATH" || exit 1
+
+RESULT_ARCHIVE_PATH="$NEW_BUILD_DIR_PATH.zip"
+
+rm -f "$RESULT_ARCHIVE_PATH"
+
+cd "${RUNTIME_DIR}" || exit
+
+zip -r "$RESULT_ARCHIVE_PATH" "$NEW_BUILD_DIR_NAME"
+
+rm -Rf "$NEW_BUILD_DIR_PATH"
+
+printf '\nResult archive: %s\n' "${RESULT_ARCHIVE_PATH}"
+
+if [ -n "$COPY_TO" ]
+then
+  printf "Copy result archive to %s\n" "$COPY_TO"
+
+  cp -f "$RESULT_ARCHIVE_PATH" "$COPY_TO"
+fi

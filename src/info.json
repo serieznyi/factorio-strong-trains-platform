@@ -1,0 +1,15 @@
+{
+  "name": "TrainsStrongPlatform",
+  "version": "0.0.1",
+  "title": "Trains Strong Platform",
+  "author": "Maxim Mironyuk",
+  "contact": "",
+  "homepage": "",
+  "description": "After destroying by enemy - train can move to destination  ",
+  "factorio_version": "1.1",
+  "dependencies": [
+    "base >= 1.1.46",
+    "flib >= 0.8.4",
+    "!ick-automatic-train-repair"
+  ]
+}
