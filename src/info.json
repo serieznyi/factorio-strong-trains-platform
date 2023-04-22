@@ -5,7 +5,7 @@
   "author": "Maxim Mironyuk",
   "contact": "",
   "homepage": "",
-  "description": "After destroying by enemy - train can move to destination  ",
+  "description": "After the destruction of the rolling stock, a mobile damaged platform remains",
   "factorio_version": "1.1",
   "dependencies": [
     "base >= 1.1.46",
