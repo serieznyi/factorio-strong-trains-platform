@@ -29,6 +29,9 @@ end
 
 ---@param entity LuaEntity
 function main.register_died_rolling_stock(entity)
+    -- stops the train
+    entity.train.speed = 0
+
     if global.tsp_died_rolling_stocks == nil then
         global.tsp_died_rolling_stocks = {}
     end
@@ -63,9 +66,6 @@ function main.replace_died_rolling_stock(unit_number)
             and mod.defines.prototypes.entity.destroyed_locomotive
             or mod.defines.prototypes.entity.destroyed_platform
 
-    -- todo debug
-    print(serpent.block(destoyed_entity_data))
-
     local new_rolling_stock = destoyed_entity_data.surface.create_entity({
         name = destroyed_entity_name,
         position = destoyed_entity_data.position,
@@ -74,6 +74,23 @@ function main.replace_died_rolling_stock(unit_number)
         move_stuck_players  = true,
         orientation = destoyed_entity_data.orientation,
     })
+
+    if new_rolling_stock == nil then
+        for _, player in ipairs(destoyed_entity_data.force.players) do
+            player.print({"console.tsp-error-cant-place-destroyed-rolling-stock"}, {r = 0.7, a = 0.5})
+            log("Cant place destroyed rolling stock")
+        end
+        return
+    end
+
+    if new_rolling_stock.type == "locomotive" then
+        local fuel_inventory = new_rolling_stock.get_inventory(defines.inventory.fuel)
+
+        for fueld_name, fuel_count in pairs(destoyed_entity_data.fuels) do
+            fuel_inventory.insert({name = fueld_name, count = fuel_count})
+            break
+        end
+    end
 
     global.tsp_died_rolling_stocks[unit_number] = nil
 
