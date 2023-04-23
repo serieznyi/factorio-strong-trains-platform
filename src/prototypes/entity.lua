@@ -28,8 +28,8 @@ prototype.placeable_by = {item = prototype_defines.item.destroyed_locomotive, co
 prototype.create_ghost_on_death = false
 --prototype.max_speed =
 prototype.pictures = {size = {1, 1}, filename = empty_icon_path, direction_count = 1}
-prototype.selected_minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-locomotive/diesel-locomotive-selected-minimap-representation.png")
-prototype.minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-locomotive/diesel-locomotive-minimap-representation.png")
+prototype.selected_minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-locomotive/minimap-representation/selected.png")
+prototype.minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-locomotive/minimap-representation/default.png")
 prototype.resistances = {
     {type = "physical", percent = 85},
     {type = "explosion",  percent = 85},
@@ -54,8 +54,8 @@ prototype.horizontal_doors = nil
 prototype.vertical_doors = nil
 prototype.inventory_size = 0
 prototype.pictures = {size = {1, 1}, filename = empty_icon_path, direction_count = 1}
-prototype.minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-platform/cargo-wagon-minimap-representation.png")
-prototype.selected_minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-platform/cargo-wagon-selected-minimap-representation.png")
+prototype.minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-platform/minimap-representation/default.png")
+prototype.selected_minimap_representation = minimap_representation("__TrainsStrongPlatform__/graphics/entity/destroyed-platform/minimap-representation/selected.png")
 prototype.resistances = {
     {type = "physical", percent = 85},
     {type = "explosion",  percent = 85},
