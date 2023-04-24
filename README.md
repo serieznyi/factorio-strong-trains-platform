@@ -1,8 +1,8 @@
-# Trains Strong Platform
+# Strong Trains Platform
 
-After destroying by enemy - train can move to destination  
+After the destruction of a part of the train, a movable platform remains.
 
-### Third-party resources and references
+### Third-party resources
  - [Flat car v1](https://free3d.com/3d-model/flat-car-v1--355163.html) printable_models
  - [HDRIs/Railway Bridge 02](https://polyhaven.com/a/railway_bridge_02) Sergej Majboroda / CC0
 

@@ -2,7 +2,10 @@ local main = {}
 
 ---@param entity LuaEntity
 local function is_destoyed_rolling_stock(entity)
-    return entity.name == mod.defines.prototypes.entity.destroyed_locomotive or entity.name == mod.defines.prototypes.entity.destroyed_platform
+    return entity.name == mod.defines.prototypes.entity.destroyed_locomotive
+            or entity.name == mod.defines.prototypes.entity.destroyed_wagon
+            or entity.name == mod.defines.prototypes.entity.destroyed_fluid_wagon
+            or entity.name == mod.defines.prototypes.entity.destroyed_artillery_wagon
 end
 
 ---@param surface LuaSurface
@@ -62,9 +65,16 @@ end
 ---@return LuaEntity
 function main.replace_died_rolling_stock(unit_number)
     local destoyed_entity_data = main.get_destroyed_data(unit_number)
-    local destroyed_entity_name = destoyed_entity_data.type == "locomotive"
-            and mod.defines.prototypes.entity.destroyed_locomotive
-            or mod.defines.prototypes.entity.destroyed_platform
+
+    print(destoyed_entity_data.type)
+
+    local destroyed_map = {
+        ["locomotive"] = mod.defines.prototypes.entity.destroyed_locomotive,
+        ["cargo-wagon"] = mod.defines.prototypes.entity.destroyed_wagon,
+        ["fluid-wagon"] = mod.defines.prototypes.entity.destroyed_fluid_wagon,
+        ["artillery-wagon"] = mod.defines.prototypes.entity.destroyed_artillery_wagon,
+    }
+    local destroyed_entity_name = destroyed_map[destoyed_entity_data.type]
 
     local new_rolling_stock = destoyed_entity_data.surface.create_entity({
         name = destroyed_entity_name,
@@ -77,7 +87,7 @@ function main.replace_died_rolling_stock(unit_number)
 
     if new_rolling_stock == nil then
         for _, player in ipairs(destoyed_entity_data.force.players) do
-            player.print({"console.tsp-error-cant-place-destroyed-rolling-stock"}, {r = 0.7, a = 0.5})
+            player.print({"console.stp-error-cant-place-destroyed-rolling-stock"}, {r = 0.7, a = 0.5})
             log("Cant place destroyed rolling stock")
         end
         return
@@ -103,12 +113,12 @@ function main.update_alert_message(train)
     local surface = rolling_stock.surface
     local force = rolling_stock.force
     local destroyed_rolling_stocks = get_destroyed_rolling_stocks(surface, force)
-    local icon = { type = "virtual", name = "tsp-destroyed-rolling-stock" }
+    local icon = { type = "virtual", name = "stp-destroyed-rolling-stock" }
 
     if #destroyed_rolling_stocks > 0 then
         for _, player in ipairs(rolling_stock.force.players) do
             for _, entity in ipairs(destroyed_rolling_stocks) do
-                player.add_custom_alert(entity, icon, {"tsp-destroyed-rolling-stock"}, true)
+                player.add_custom_alert(entity, icon, {"stp-destroyed-rolling-stock"}, true)
             end
         end
     else
