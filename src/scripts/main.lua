@@ -118,7 +118,7 @@ function main.update_alert_message(train)
     if #destroyed_rolling_stocks > 0 then
         for _, player in ipairs(rolling_stock.force.players) do
             for _, entity in ipairs(destroyed_rolling_stocks) do
-                player.add_custom_alert(entity, icon, {"stp-destroyed-rolling-stock"}, true)
+                player.add_custom_alert(entity, icon, {"alert-message.stp-destroyed-rolling-stock"}, true)
             end
         end
     else
