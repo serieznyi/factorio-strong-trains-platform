@@ -7,10 +7,12 @@ local function handle_on_entity_died(event)
     main.register_died_rolling_stock(entity)
 end
 
-local function handle_on_train_schedule_changed(event)
+local function handle_on_train_changed_state(event)
     local train = event.train
 
-    main.process_train_schedule_changes(train)
+    if train.state == defines.train_state.wait_station then
+        main.process_train_arrived(train)
+    end
 end
 
 local function handle_on_entity_destroyed(event)
@@ -36,4 +38,4 @@ script.on_event(defines.events.on_entity_died, handle_on_entity_died, {
 })
 script.on_event(defines.events.on_entity_destroyed, handle_on_entity_destroyed)
 script.on_event(defines.events.on_train_created, handle_on_train_created)
-script.on_event(defines.events.on_train_schedule_changed, handle_on_train_schedule_changed)
+script.on_event(defines.events.on_train_changed_state, handle_on_train_changed_state)

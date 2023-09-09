@@ -8,8 +8,25 @@ local function get_train_surface(train)
 end
 
 ---@param train LuaTrain
+---@param station LuaEntity
+---@return bool
+local function is_train_has_station_in_schedule(train, station)
+    if not train.schedule or #train.schedule.records == 0 then
+        return false
+    end
+
+    local lastRecord = train.schedule.records[#train.schedule.records]
+
+    return lastRecord.station == station.backer_name
+end
+
+---@param train LuaTrain
 ---@param destination_station LuaEntity
 local function add_train_stop_in_schedule(train, destination_station)
+    if is_train_has_station_in_schedule(train, destination_station) then
+        return
+    end
+
     local new_destination = {
         station = destination_station.backer_name,
         wait_conditions={
@@ -20,8 +37,10 @@ local function add_train_stop_in_schedule(train, destination_station)
     if not train.schedule then
         train.schedule = {current = 1, records = {new_destination}}
     else
-        table.insert(train.schedule.records, new_destination)
-        train.schedule.current = #train.schedule.records
+        local schedule = train.schedule
+        table.insert(schedule.records, new_destination)
+        schedule.current = #train.schedule.records
+        train.schedule = schedule
     end
 
 end
@@ -228,7 +247,7 @@ function main.get_train_station_for_destroyed_trains(surface, force)
 end
 
 ---@param train LuaTrain
-function main.process_train_schedule_changes(train)
+function main.process_train_arrived(train)
     if not train.station or not is_train_has_destoyed_rolling_stock(train) then
         return
     end
@@ -269,7 +288,7 @@ function main.post_train_action(train)
         return
     end
 
-    if destination_station and (post_action == mod.defines.post_action.station_manual or mod.defines.post_action.station_clean_schedule) then
+    if destination_station and (post_action == mod.defines.post_action.station_manual or post_action == mod.defines.post_action.station_clean_schedule) then
         add_train_stop_in_schedule(locomotive.train, destination_station)
     end
 end
