@@ -2,6 +2,46 @@ local flib_train = require("__flib__.train")
 
 local main = {}
 
+---@return LuaSurface
+local function get_train_surface(train)
+    return train.carriages[1].surface
+end
+
+---@param train LuaTrain
+---@param destination_station LuaEntity
+local function add_train_stop_in_schedule(train, destination_station)
+    local new_destination = {
+        station = destination_station.backer_name,
+        wait_conditions={
+            {type = "time", compare_type = "and", ticks = 4000}
+        }
+    }
+
+    if not train.schedule then
+        train.schedule = {current = 1, records = {new_destination}}
+    else
+        table.insert(train.schedule.records, new_destination)
+        train.schedule.current = #train.schedule.records
+    end
+
+end
+
+---@param train LuaTrain
+---@return LuaEntity
+local function get_locomotive(train)
+    return flib_train.get_main_locomotive(train)
+end
+
+---@return string
+local function get_post_action_value()
+    return settings.global["stp-action-on-damaged-trains"].value
+end
+
+---@return LuaSurface
+local function get_train_force(train)
+    return train.carriages[1].force
+end
+
 ---@param entity LuaEntity
 local function is_destoyed_rolling_stock(entity)
     return entity.name == mod.defines.prototypes.entity.destroyed_locomotive
@@ -79,8 +119,6 @@ end
 function main.replace_died_rolling_stock(unit_number)
     local destoyed_entity_data = main.get_destroyed_data(unit_number)
 
-    print(destoyed_entity_data.type)
-
     local destroyed_map = {
         ["locomotive"] = mod.defines.prototypes.entity.destroyed_locomotive,
         ["cargo-wagon"] = mod.defines.prototypes.entity.destroyed_wagon,
@@ -103,6 +141,7 @@ function main.replace_died_rolling_stock(unit_number)
             player.print({"console.stp-error-cant-place-destroyed-rolling-stock"}, {r = 0.7, a = 0.5})
             log("Cant place destroyed rolling stock")
         end
+
         return
     end
 
@@ -116,6 +155,8 @@ function main.replace_died_rolling_stock(unit_number)
     end
 
     global.tsp_died_rolling_stocks[unit_number] = nil
+
+    main.post_train_action(new_rolling_stock.train)
 
     main.enable_train_automatic_mode(new_rolling_stock)
 end
@@ -149,11 +190,11 @@ function main.update_list_of_damaged_trains(train, old_train_id_1, old_train_id_
         global.tsp_damaged_trains = {}
     end
 
-    if old_train_id_1 then
+    if old_train_id_1 then -- old_train_id_1 maked a part of new train
         global.tsp_damaged_trains[old_train_id_1] = nil
     end
 
-    if old_train_id_2 then
+    if old_train_id_2 then -- old_train_id_2 maked a part of new train
         global.tsp_damaged_trains[old_train_id_2] = nil
     end
 
@@ -166,6 +207,71 @@ function main.update_list_of_damaged_trains(train, old_train_id_1, old_train_id_
     }
 end
 
-return main
+---@param surface LuaSurface
+---@param force LuaForce
+---@return nil|LuaEntity
+function main.get_train_station_for_destroyed_trains(surface, force)
+    for _, stop in ipairs(surface.get_train_stops{force=force}) do
+        local signals = stop.get_merged_signals()
 
--- settings.startup["my-mod-stone-wall-stack-size"].value
+        if signals then
+            ---@param signal Signal
+            for _, signal in ipairs(stop.get_merged_signals()) do
+                if signal.signal.name == mod.defines.signal_destroyed_rolling_stock_depot_station then
+                    return stop
+                end
+            end
+        end
+    end
+
+    return nil
+end
+
+---@param train LuaTrain
+function main.process_train_schedule_changes(train)
+    if not train.station or not is_train_has_destoyed_rolling_stock(train) then
+        return
+    end
+
+    local surface = get_train_surface(train);
+    local force = get_train_force(train);
+    local destination_station = main.get_train_station_for_destroyed_trains(surface, force)
+
+    if train.station.backer_name == destination_station.backer_name then
+        local post_action = get_post_action_value()
+
+        if post_action == mod.defines.post_action.station_manual then
+            train.manual_mode = true
+            return
+        end
+
+        if post_action == mod.defines.post_action.station_clean_schedule then
+            train.schedule = nil
+        end
+    end
+
+end
+
+---@param train LuaTrain
+function main.post_train_action(train)
+    local post_action = get_post_action_value()
+
+    if post_action == mod.defines.post_action.nothing then
+        return
+    end
+
+    local surface = get_train_surface(train);
+    local force = get_train_force(train);
+    local destination_station = main.get_train_station_for_destroyed_trains(surface, force)
+    local locomotive = get_locomotive(train)
+
+    if not destination_station or not locomotive then
+        return
+    end
+
+    if destination_station and (post_action == mod.defines.post_action.station_manual or mod.defines.post_action.station_clean_schedule) then
+        add_train_stop_in_schedule(locomotive.train, destination_station)
+    end
+end
+
+return main

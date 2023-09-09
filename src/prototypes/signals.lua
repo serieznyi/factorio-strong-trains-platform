@@ -4,7 +4,7 @@ data:extend({
     {
         type = "virtual-signal",
         name = "stp-destroyed-rolling-stock-depot-station",
-        icon = "__StrongTrainsPlatform__/graphics/icons/trash.png",
+        icon = "__StrongTrainsPlatform__/graphics/icons/train-stop-for-damaged-trains.png",
         icon_size = 64,
     },
     {
