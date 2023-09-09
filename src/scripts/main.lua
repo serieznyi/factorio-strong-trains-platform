@@ -1,3 +1,5 @@
+local flib_train = require("__flib__.train")
+
 local main = {}
 
 ---@param entity LuaEntity
@@ -6,6 +8,17 @@ local function is_destoyed_rolling_stock(entity)
             or entity.name == mod.defines.prototypes.entity.destroyed_wagon
             or entity.name == mod.defines.prototypes.entity.destroyed_fluid_wagon
             or entity.name == mod.defines.prototypes.entity.destroyed_artillery_wagon
+end
+
+---@param train LuaTrain
+local function is_train_has_destoyed_rolling_stock(train)
+    for _, carriage in ipairs(train.carriages) do
+        if is_destoyed_rolling_stock(carriage) then
+            return true
+        end
+    end
+
+    return false
 end
 
 ---@param surface LuaSurface
@@ -126,4 +139,33 @@ function main.update_alert_message(train)
     end
 end
 
+---@param train LuaTrain
+---@param old_train_id_1 uint
+---@param old_train_id_2 uint
+function main.update_list_of_damaged_trains(train, old_train_id_1, old_train_id_2)
+    local train_with_destroyed_rolling_stock = is_train_has_destoyed_rolling_stock(train)
+
+    if global.tsp_damaged_trains == nil then
+        global.tsp_damaged_trains = {}
+    end
+
+    if old_train_id_1 then
+        global.tsp_damaged_trains[old_train_id_1] = nil
+    end
+
+    if old_train_id_2 then
+        global.tsp_damaged_trains[old_train_id_2] = nil
+    end
+
+    if not train_with_destroyed_rolling_stock then
+        return
+    end
+
+    global.tsp_damaged_trains[train.id] = {
+        id = train.id,
+    }
+end
+
 return main
+
+-- settings.startup["my-mod-stone-wall-stack-size"].value

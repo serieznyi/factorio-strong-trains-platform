@@ -12,6 +12,7 @@ local function handle_on_entity_destroyed(event)
 end
 
 local function handle_on_train_created(event)
+    main.update_list_of_damaged_trains(event.train, event.old_train_id_1, event.old_train_id_2)
     main.update_alert_message(event.train)
 end
 
