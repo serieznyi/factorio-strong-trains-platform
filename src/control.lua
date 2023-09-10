@@ -31,10 +31,10 @@ end
 script.on_event(defines.events.on_entity_died, handle_on_entity_died, {
     { filter = "rolling-stock" },
     -- ignore rolling stock from current mode
-    { filter = "name", name = mod.defines.prototypes.entity.destroyed_artillery_wagon, mode = "and", invert = true },
-    { filter = "name", name = mod.defines.prototypes.entity.destroyed_fluid_wagon, mode = "and", invert = true },
-    { filter = "name", name = mod.defines.prototypes.entity.destroyed_wagon, mode = "and", invert = true },
-    { filter = "name", name = mod.defines.prototypes.entity.destroyed_locomotive, mode = "and", invert = true }
+    { filter = "name", name = mod.defines.prototype.entity.destroyed_artillery_wagon, mode = "and", invert = true },
+    { filter = "name", name = mod.defines.prototype.entity.destroyed_fluid_wagon, mode = "and", invert = true },
+    { filter = "name", name = mod.defines.prototype.entity.destroyed_wagon, mode = "and", invert = true },
+    { filter = "name", name = mod.defines.prototype.entity.destroyed_locomotive, mode = "and", invert = true }
 })
 script.on_event(defines.events.on_entity_destroyed, handle_on_entity_destroyed)
 script.on_event(defines.events.on_train_created, handle_on_train_created)

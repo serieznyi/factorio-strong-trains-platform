@@ -1,4 +1,4 @@
-local prototype_defines = require("defines.index").prototypes
+local prototype_defines = require("defines")
 
 data:extend({
     {

@@ -63,10 +63,10 @@ end
 
 ---@param entity LuaEntity
 local function is_destoyed_rolling_stock(entity)
-    return entity.name == mod.defines.prototypes.entity.destroyed_locomotive
-            or entity.name == mod.defines.prototypes.entity.destroyed_wagon
-            or entity.name == mod.defines.prototypes.entity.destroyed_fluid_wagon
-            or entity.name == mod.defines.prototypes.entity.destroyed_artillery_wagon
+    return entity.name == mod.defines.prototype.entity.destroyed_locomotive
+            or entity.name == mod.defines.prototype.entity.destroyed_wagon
+            or entity.name == mod.defines.prototype.entity.destroyed_fluid_wagon
+            or entity.name == mod.defines.prototype.entity.destroyed_artillery_wagon
 end
 
 ---@param train LuaTrain
@@ -139,10 +139,10 @@ function main.replace_died_rolling_stock(unit_number)
     local destoyed_entity_data = main.get_destroyed_data(unit_number)
 
     local destroyed_map = {
-        ["locomotive"] = mod.defines.prototypes.entity.destroyed_locomotive,
-        ["cargo-wagon"] = mod.defines.prototypes.entity.destroyed_wagon,
-        ["fluid-wagon"] = mod.defines.prototypes.entity.destroyed_fluid_wagon,
-        ["artillery-wagon"] = mod.defines.prototypes.entity.destroyed_artillery_wagon,
+        ["locomotive"] = mod.defines.prototype.entity.destroyed_locomotive,
+        ["cargo-wagon"] = mod.defines.prototype.entity.destroyed_wagon,
+        ["fluid-wagon"] = mod.defines.prototype.entity.destroyed_fluid_wagon,
+        ["artillery-wagon"] = mod.defines.prototype.entity.destroyed_artillery_wagon,
     }
     local destroyed_entity_name = destroyed_map[destoyed_entity_data.type]
 
