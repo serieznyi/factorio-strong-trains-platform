@@ -1,7 +1,7 @@
 local hit_effects = require ("__base__/prototypes/entity/hit-effects")
 local sounds = require("__base__/prototypes/entity/sounds")
 
-local prototype_defines = require("defines.index")
+local prototype_defines = require("defines.index").prototypes
 local platform_pictures = {
     layers =
     {
