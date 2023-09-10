@@ -1,0 +1,15 @@
+{
+  "name": "StrongTrainsPlatform",
+  "version": "0.1.0",
+  "title": "Strong Trains Platform",
+  "author": "serieznyi",
+  "contact": "",
+  "homepage": "",
+  "description": "After the destruction of a part of the train, a movable platform remains.",
+  "factorio_version": "1.1",
+  "dependencies": [
+    "base >= 1.1.46",
+    "flib >= 0.8.4",
+    "!ick-automatic-train-repair"
+  ]
+}
