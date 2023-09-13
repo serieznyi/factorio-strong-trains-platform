@@ -30,7 +30,7 @@ end
 
 script.on_event(defines.events.on_entity_died, handle_on_entity_died, {
     { filter = "rolling-stock" },
-    -- ignore rolling stock from current mode
+    -- ignore destroyed rolling stock
     { filter = "name", name = mod.defines.prototype.entity.destroyed_artillery_wagon, mode = "and", invert = true },
     { filter = "name", name = mod.defines.prototype.entity.destroyed_fluid_wagon, mode = "and", invert = true },
     { filter = "name", name = mod.defines.prototype.entity.destroyed_wagon, mode = "and", invert = true },

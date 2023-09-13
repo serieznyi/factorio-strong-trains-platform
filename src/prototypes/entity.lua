@@ -1,6 +1,17 @@
 local hit_effects = require ("__base__/prototypes/entity/hit-effects")
 local sounds = require("__base__/prototypes/entity/sounds")
 
+---@param type string
+---@return table
+local function get_strong_minimap_representation(type)
+    return {
+       filename = "__StrongTrainsPlatform__/graphics/entity/strong/" .. type .. "/minimap-representation/default.png",
+       flags = {"icon"},
+       size = {20, 40},
+       scale = 0.5
+   }
+end
+
 local prototype_defines = require("defines")
 local platform_pictures = {
     layers =
@@ -534,7 +545,38 @@ prototype = {
     rotating_stopped_sound = nil,
     cannon_base_shiftings = nil,
 }
+table.insert(prototypes, prototype)
 
+------------- PROTOTYPE: Strong Cargo Wagon
+prototype = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
+prototype.name = prototype_defines.entity.strong_cargo_wagon
+prototype.minable.result = prototype_defines.item.strong_cargo_wagon
+prototype.minimap_representation = get_strong_minimap_representation("cargo-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("cargo-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Fluid Wagon
+prototype = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
+prototype.name = prototype_defines.entity.strong_fluid_wagon
+prototype.minable.result = prototype_defines.item.strong_fluid_wagon
+prototype.minimap_representation = get_strong_minimap_representation("fluid-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("fluid-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Artillery Wagon
+prototype = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
+prototype.name = prototype_defines.entity.strong_artillery_wagon
+prototype.minable.result = prototype_defines.item.strong_artillery_wagon
+prototype.minimap_representation = get_strong_minimap_representation("artillery-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("artillery-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Locomotive
+prototype = table.deepcopy(data.raw["locomotive"]["locomotive"])
+prototype.name = prototype_defines.entity.strong_locomotive
+prototype.minable.result = prototype_defines.item.strong_locomotive
+prototype.minimap_representation = get_strong_minimap_representation("locomotive")
+prototype.selected_minimap_representation = get_strong_minimap_representation("locomotive")
 table.insert(prototypes, prototype)
 
 data:extend(prototypes)
