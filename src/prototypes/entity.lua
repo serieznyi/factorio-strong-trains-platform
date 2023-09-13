@@ -57,9 +57,10 @@ local destroyed_resistance = {
     {type = "impact", percent = 85}
 }
 local destroyed_platform_weight = 200
+local prototypes = {}
 
 ------------- PROTOTYPE: Destroyed Locomotive
-local locomotive = {
+local prototype = {
     name = prototype_defines.entity.destroyed_locomotive,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -247,9 +248,10 @@ local locomotive = {
         scale = 0.5
     }, -- destroyed: use own representation icons
 }
+table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Wagon
-local cargo_wagon = {
+prototype = {
     name = prototype_defines.entity.destroyed_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -324,9 +326,10 @@ local cargo_wagon = {
     allow_passengers = false, -- destroyed: no place for passengers
     placeable_by = {item = prototype_defines.item.destroyed_wagon, count = 1},
 }
+table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Fluid Wagon
-local fluid_wagon = {
+prototype = {
     name = prototype_defines.entity.destroyed_fluid_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -392,9 +395,10 @@ local fluid_wagon = {
         scale = 0.5
     },
 }
-------------- PROTOTYPE: Destroyed Artillery Wagon
+table.insert(prototypes, prototype)
 
-local artillery_wagon = {
+------------- PROTOTYPE: Destroyed Artillery Wagon
+prototype = {
     name = prototype_defines.entity.destroyed_artillery_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -531,4 +535,6 @@ local artillery_wagon = {
     cannon_base_shiftings = nil,
 }
 
-data:extend({ locomotive, cargo_wagon, fluid_wagon, artillery_wagon })
+table.insert(prototypes, prototype)
+
+data:extend(prototypes)
