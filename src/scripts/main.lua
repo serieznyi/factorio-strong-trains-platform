@@ -56,6 +56,20 @@ local function get_post_action_value()
     return settings.global["stp-action-on-damaged-trains"].value
 end
 
+---@return bool
+local function is_replace_only_strong_rolling_stock()
+    return not settings.global["stp-use-strong-platform-for-all-rolling-stock"].value
+end
+
+---@param entity LuaEntity
+---@return bool
+local function is_strong_rolling_stock(entity)
+    return entity.name == mod.defines.prototype.entity.strong_locomotive
+            or entity.name == mod.defines.prototype.entity.strong_cargo_wagon
+            or entity.name == mod.defines.prototype.entity.strong_fluid_wagon
+            or entity.name == mod.defines.prototype.entity.strong_artillery_wagon
+end
+
 ---@return LuaSurface
 local function get_train_force(train)
     return train.carriages[1].force
@@ -104,6 +118,10 @@ end
 
 ---@param entity LuaEntity
 function main.register_died_rolling_stock(entity)
+    if is_replace_only_strong_rolling_stock() and not is_strong_rolling_stock(entity) then
+        return
+    end
+
     -- stops the train
     entity.train.speed = 0
 
