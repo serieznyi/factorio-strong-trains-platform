@@ -18,11 +18,11 @@ table.insert(items, item)
 item = {
     type = "item",
     subgroup = "train-transport",
-    name = prototype_defines.item.destroyed_wagon,
+    name = prototype_defines.item.destroyed_cargo_wagon,
     icon = "__StrongTrainsPlatform__/graphics/item/destroyed/wagon.png",
     icon_size = 64,
     stack_size = 1,
-    place_result = prototype_defines.entity.destroyed_wagon,
+    place_result = prototype_defines.entity.destroyed_cargo_wagon,
     default_request_amount = 1,
 }
 table.insert(items, item)

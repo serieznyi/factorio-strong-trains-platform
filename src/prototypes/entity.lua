@@ -263,7 +263,7 @@ table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Wagon
 prototype = {
-    name = prototype_defines.entity.destroyed_wagon,
+    name = prototype_defines.entity.destroyed_cargo_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
     -------------------------------------------------------------------------------------------------------------------
@@ -306,7 +306,7 @@ prototype = {
     ------                        OVERRIDE VALUES
     -------------------------------------------------------------------------------------------------------------------
     inventory_size = 0, -- destroyed: no cargo
-    minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_wagon},
+    minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_cargo_wagon},
 
     max_health = destroyed_health_size, -- destroyed: make almost invulnerable
     weight = 500, -- destroyed: 50% from original wagon
@@ -335,7 +335,7 @@ prototype = {
     close_sound = nil, -- destroyed: no additional sounds
     create_ghost_on_death = false,
     allow_passengers = false, -- destroyed: no place for passengers
-    placeable_by = {item = prototype_defines.item.destroyed_wagon, count = 1},
+    placeable_by = {item = prototype_defines.item.destroyed_cargo_wagon, count = 1},
 }
 table.insert(prototypes, prototype)
 

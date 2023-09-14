@@ -78,7 +78,7 @@ end
 ---@param entity LuaEntity
 local function is_destoyed_rolling_stock(entity)
     return entity.name == mod.defines.prototype.entity.destroyed_locomotive
-            or entity.name == mod.defines.prototype.entity.destroyed_wagon
+            or entity.name == mod.defines.prototype.entity.destroyed_cargo_wagon
             or entity.name == mod.defines.prototype.entity.destroyed_fluid_wagon
             or entity.name == mod.defines.prototype.entity.destroyed_artillery_wagon
 end
@@ -158,7 +158,7 @@ function main.replace_died_rolling_stock(unit_number)
 
     local destroyed_map = {
         ["locomotive"] = mod.defines.prototype.entity.destroyed_locomotive,
-        ["cargo-wagon"] = mod.defines.prototype.entity.destroyed_wagon,
+        ["cargo-wagon"] = mod.defines.prototype.entity.destroyed_cargo_wagon,
         ["fluid-wagon"] = mod.defines.prototype.entity.destroyed_fluid_wagon,
         ["artillery-wagon"] = mod.defines.prototype.entity.destroyed_artillery_wagon,
     }

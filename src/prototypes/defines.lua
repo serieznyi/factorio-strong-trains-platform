@@ -1,7 +1,7 @@
 return {
     entity = {
         destroyed_locomotive = "stp-destroyed-locomotive",
-        destroyed_wagon = "stp-destroyed-wagon",
+        destroyed_cargo_wagon = "stp-destroyed-wagon",
         destroyed_fluid_wagon = "stp-destroyed-fluid-wagon",
         destroyed_artillery_wagon = "stp-destroyed-artillery-wagon",
         strong_locomotive = "stp-strong-locomotive",
@@ -11,7 +11,7 @@ return {
     },
     item = {
         destroyed_locomotive = "stp-destroyed-locomotive",
-        destroyed_wagon = "stp-destroyed-wagon",
+        destroyed_cargo_wagon = "stp-destroyed-cargo-wagon",
         destroyed_fluid_wagon = "stp-destroyed-fluid-wagon",
         destroyed_artillery_wagon = "stp-destroyed-artillery-wagon",
         strong_fluid_wagon = "stp-strong-fluid-wagon",
