@@ -1,8 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.X
+Version: 1.0.1
 Date: 18. 09. 2023
     Documentation:
     - Add information about localization
+    - Removed incompatibility with "ick-automatic-train-repair"
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 18. 09. 2023
