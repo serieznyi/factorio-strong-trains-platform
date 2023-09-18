@@ -216,7 +216,7 @@ table.insert(prototypes, prototype)
 ------------- PROTOTYPE: Destroyed Fluid Wagon
 prototype = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
 prototype.name = prototype_defines.entity.destroyed_fluid_wagon
-prototype.minable = {mining_time = 0.5, result = "fluid-wagon"}
+prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_fluid_wagon}
 prototype.mined_sound = {filename = "__core__/sound/deconstruct-large.ogg",volume = 0.8}
 prototype.max_health = destroyed_health_size
 prototype.capacity = 0
