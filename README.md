@@ -16,3 +16,6 @@ After the destruction of a part of the train, a movable platform remains.
 
 ### References
 - [Blender 2.8 | How to make a Spritesheet from a 3D Model (for Factorio)](https://www.youtube.com/watch?v=h36kd6wiWy8&t=615s)
+
+# Contributors
+- @mash_lash - icons and localization (ru, en)
