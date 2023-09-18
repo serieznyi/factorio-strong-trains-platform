@@ -24,10 +24,19 @@ local function handle_on_train_created(event)
     main.update_list_of_damaged_trains(event.train, event.old_train_id_1, event.old_train_id_2)
 end
 
+local function handle_on_load()
+    main.on_load()
+end
+
+local function handle_on_init()
+    main.on_init()
+end
+
 ---------------------------------------------------------------------------
 -- -- -- REGISTER EVENTS
 ---------------------------------------------------------------------------
-
+script.on_init(handle_on_init)
+script.on_load(handle_on_load)
 script.on_event(defines.events.on_entity_died, handle_on_entity_died, {
     { filter = "rolling-stock" },
     -- ignore destroyed rolling stock

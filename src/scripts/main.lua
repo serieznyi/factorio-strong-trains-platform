@@ -111,6 +111,24 @@ local function get_destroyed_rolling_stocks(surface, force)
     return destroyed_rolling_stocks
 end
 
+local function init_global_vars()
+    if global.tsp_died_rolling_stocks == nil then
+        global.tsp_died_rolling_stocks = {}
+    end
+
+    if global.tsp_damaged_trains == nil then
+        global.tsp_damaged_trains = {}
+    end
+end
+
+function main.on_load()
+    init_global_vars()
+end
+
+function main.on_init()
+    init_global_vars()
+end
+
 ---@param unit_number uint
 function main.get_destroyed_data(unit_number)
     return global.tsp_died_rolling_stocks[unit_number]
@@ -124,10 +142,6 @@ function main.register_died_rolling_stock(entity)
 
     -- stops the train
     entity.train.speed = 0
-
-    if global.tsp_died_rolling_stocks == nil then
-        global.tsp_died_rolling_stocks = {}
-    end
 
     local fuel_inventory = entity.get_inventory(defines.inventory.fuel)
 
@@ -222,10 +236,6 @@ end
 ---@param old_train_id_2 uint
 function main.update_list_of_damaged_trains(train, old_train_id_1, old_train_id_2)
     local train_with_destroyed_rolling_stock = is_train_has_destoyed_rolling_stock(train)
-
-    if global.tsp_damaged_trains == nil then
-        global.tsp_damaged_trains = {}
-    end
 
     if old_train_id_1 then -- old_train_id_1 maked a part of new train
         global.tsp_damaged_trains[old_train_id_1] = nil
