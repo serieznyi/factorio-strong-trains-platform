@@ -8,7 +8,7 @@ data:extend({
     },
     {
         type = "bool-setting",
-        name = "stp-use-strong-platform-for-all-rolling-stock",
+        name = "stp-use-strong-platform-for-all-trains",
         setting_type = "runtime-global",
         default_value = false
     },

@@ -3,6 +3,7 @@ Version: 1.0.3
 Date: 18. 09. 2023
     Bugfixes:
     - Fix trying work with every destroyed entity as with strong rolling stock
+    - Fix wrong and corrupted translation
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 18. 09. 2023

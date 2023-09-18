@@ -58,7 +58,7 @@ end
 
 ---@return bool
 local function is_replace_only_strong_rolling_stock()
-    return not settings.global["stp-use-strong-platform-for-all-rolling-stock"].value
+    return not settings.global["stp-use-strong-platform-for-all-trains"].value
 end
 
 ---@param entity LuaEntity
