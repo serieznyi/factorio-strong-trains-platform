@@ -9,6 +9,4 @@ After destroying locomotive/cargo wagon by enemy - it can move to destination wi
 
 # Additional info
 
-- [Mod page](https://mods.factorio.com/mod/trains-string-platform)
 - [Factorio Forum Post](https://forums.factorio.com/viewtopic.php?f=?&t=?)
-- [Changelog](./changelog.txt)
