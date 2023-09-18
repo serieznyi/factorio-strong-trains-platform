@@ -1,4 +1,5 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.0.1
-Date: 2021-11-05
-  Initial release
+Version: 1.0.0
+Date: 18. 09. 2023
+    Changes:
+    - Added strong rolling stock which not fully destroyable

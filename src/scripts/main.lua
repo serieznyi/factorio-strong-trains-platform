@@ -56,6 +56,20 @@ local function get_post_action_value()
     return settings.global["stp-action-on-damaged-trains"].value
 end
 
+---@return bool
+local function is_replace_only_strong_rolling_stock()
+    return not settings.global["stp-use-strong-platform-for-all-rolling-stock"].value
+end
+
+---@param entity LuaEntity
+---@return bool
+local function is_strong_rolling_stock(entity)
+    return entity.name == mod.defines.prototype.entity.strong_locomotive
+            or entity.name == mod.defines.prototype.entity.strong_cargo_wagon
+            or entity.name == mod.defines.prototype.entity.strong_fluid_wagon
+            or entity.name == mod.defines.prototype.entity.strong_artillery_wagon
+end
+
 ---@return LuaSurface
 local function get_train_force(train)
     return train.carriages[1].force
@@ -63,10 +77,10 @@ end
 
 ---@param entity LuaEntity
 local function is_destoyed_rolling_stock(entity)
-    return entity.name == mod.defines.prototypes.entity.destroyed_locomotive
-            or entity.name == mod.defines.prototypes.entity.destroyed_wagon
-            or entity.name == mod.defines.prototypes.entity.destroyed_fluid_wagon
-            or entity.name == mod.defines.prototypes.entity.destroyed_artillery_wagon
+    return entity.name == mod.defines.prototype.entity.destroyed_locomotive
+            or entity.name == mod.defines.prototype.entity.destroyed_cargo_wagon
+            or entity.name == mod.defines.prototype.entity.destroyed_fluid_wagon
+            or entity.name == mod.defines.prototype.entity.destroyed_artillery_wagon
 end
 
 ---@param train LuaTrain
@@ -104,6 +118,10 @@ end
 
 ---@param entity LuaEntity
 function main.register_died_rolling_stock(entity)
+    if is_replace_only_strong_rolling_stock() and not is_strong_rolling_stock(entity) then
+        return
+    end
+
     -- stops the train
     entity.train.speed = 0
 
@@ -139,10 +157,10 @@ function main.replace_died_rolling_stock(unit_number)
     local destoyed_entity_data = main.get_destroyed_data(unit_number)
 
     local destroyed_map = {
-        ["locomotive"] = mod.defines.prototypes.entity.destroyed_locomotive,
-        ["cargo-wagon"] = mod.defines.prototypes.entity.destroyed_wagon,
-        ["fluid-wagon"] = mod.defines.prototypes.entity.destroyed_fluid_wagon,
-        ["artillery-wagon"] = mod.defines.prototypes.entity.destroyed_artillery_wagon,
+        ["locomotive"] = mod.defines.prototype.entity.destroyed_locomotive,
+        ["cargo-wagon"] = mod.defines.prototype.entity.destroyed_cargo_wagon,
+        ["fluid-wagon"] = mod.defines.prototype.entity.destroyed_fluid_wagon,
+        ["artillery-wagon"] = mod.defines.prototype.entity.destroyed_artillery_wagon,
     }
     local destroyed_entity_name = destroyed_map[destoyed_entity_data.type]
 

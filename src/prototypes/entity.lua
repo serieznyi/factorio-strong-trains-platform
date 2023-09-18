@@ -1,7 +1,18 @@
 local hit_effects = require ("__base__/prototypes/entity/hit-effects")
 local sounds = require("__base__/prototypes/entity/sounds")
 
-local prototype_defines = require("defines.index").prototypes
+---@param type string
+---@return table
+local function get_strong_minimap_representation(type)
+    return {
+       filename = "__StrongTrainsPlatform__/graphics/entity/strong/" .. type .. "/minimap-representation/default.png",
+       flags = {"icon"},
+       size = {20, 40},
+       scale = 0.5
+   }
+end
+
+local prototype_defines = require("defines")
 local platform_pictures = {
     layers =
     {
@@ -57,9 +68,10 @@ local destroyed_resistance = {
     {type = "impact", percent = 85}
 }
 local destroyed_platform_weight = 200
+local prototypes = {}
 
 ------------- PROTOTYPE: Destroyed Locomotive
-local locomotive = {
+local prototype = {
     name = prototype_defines.entity.destroyed_locomotive,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -247,10 +259,11 @@ local locomotive = {
         scale = 0.5
     }, -- destroyed: use own representation icons
 }
+table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Wagon
-local cargo_wagon = {
-    name = prototype_defines.entity.destroyed_wagon,
+prototype = {
+    name = prototype_defines.entity.destroyed_cargo_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
     -------------------------------------------------------------------------------------------------------------------
@@ -293,7 +306,7 @@ local cargo_wagon = {
     ------                        OVERRIDE VALUES
     -------------------------------------------------------------------------------------------------------------------
     inventory_size = 0, -- destroyed: no cargo
-    minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_wagon},
+    minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_cargo_wagon},
 
     max_health = destroyed_health_size, -- destroyed: make almost invulnerable
     weight = 500, -- destroyed: 50% from original wagon
@@ -322,11 +335,12 @@ local cargo_wagon = {
     close_sound = nil, -- destroyed: no additional sounds
     create_ghost_on_death = false,
     allow_passengers = false, -- destroyed: no place for passengers
-    placeable_by = {item = prototype_defines.item.destroyed_wagon, count = 1},
+    placeable_by = {item = prototype_defines.item.destroyed_cargo_wagon, count = 1},
 }
+table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Fluid Wagon
-local fluid_wagon = {
+prototype = {
     name = prototype_defines.entity.destroyed_fluid_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -392,9 +406,10 @@ local fluid_wagon = {
         scale = 0.5
     },
 }
-------------- PROTOTYPE: Destroyed Artillery Wagon
+table.insert(prototypes, prototype)
 
-local artillery_wagon = {
+------------- PROTOTYPE: Destroyed Artillery Wagon
+prototype = {
     name = prototype_defines.entity.destroyed_artillery_wagon,
     -------------------------------------------------------------------------------------------------------------------
     ------                        DEFAULT VALUES
@@ -530,5 +545,38 @@ local artillery_wagon = {
     rotating_stopped_sound = nil,
     cannon_base_shiftings = nil,
 }
+table.insert(prototypes, prototype)
 
-data:extend({ locomotive, cargo_wagon, fluid_wagon, artillery_wagon })
+------------- PROTOTYPE: Strong Cargo Wagon
+prototype = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
+prototype.name = prototype_defines.entity.strong_cargo_wagon
+prototype.minable.result = prototype_defines.item.strong_cargo_wagon
+prototype.minimap_representation = get_strong_minimap_representation("cargo-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("cargo-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Fluid Wagon
+prototype = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
+prototype.name = prototype_defines.entity.strong_fluid_wagon
+prototype.minable.result = prototype_defines.item.strong_fluid_wagon
+prototype.minimap_representation = get_strong_minimap_representation("fluid-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("fluid-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Artillery Wagon
+prototype = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
+prototype.name = prototype_defines.entity.strong_artillery_wagon
+prototype.minable.result = prototype_defines.item.strong_artillery_wagon
+prototype.minimap_representation = get_strong_minimap_representation("artillery-wagon")
+prototype.selected_minimap_representation = get_strong_minimap_representation("artillery-wagon")
+table.insert(prototypes, prototype)
+
+------------- PROTOTYPE: Strong Locomotive
+prototype = table.deepcopy(data.raw["locomotive"]["locomotive"])
+prototype.name = prototype_defines.entity.strong_locomotive
+prototype.minable.result = prototype_defines.item.strong_locomotive
+prototype.minimap_representation = get_strong_minimap_representation("locomotive")
+prototype.selected_minimap_representation = get_strong_minimap_representation("locomotive")
+table.insert(prototypes, prototype)
+
+data:extend(prototypes)

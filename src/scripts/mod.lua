@@ -1,5 +1,6 @@
 local mod = {}
 
-mod.defines = require("prototypes.defines.index")
+mod.defines = require("scripts.defines")
+mod.defines["prototype"] = require("prototypes.defines")
 
 return mod
