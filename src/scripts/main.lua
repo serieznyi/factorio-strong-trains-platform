@@ -270,13 +270,17 @@ function main.process_train_arrived(train)
         return
     end
 
+    local post_action = get_post_action_value()
+
+    if post_action == mod.defines.post_action.nothing then
+        return
+    end
+
     local surface = get_train_surface(train);
     local force = get_train_force(train);
     local destination_station = main.get_train_station_for_destroyed_trains(surface, force)
 
     if train.station.backer_name == destination_station.backer_name then
-        local post_action = get_post_action_value()
-
         if post_action == mod.defines.post_action.station_manual then
             train.manual_mode = true
             return
