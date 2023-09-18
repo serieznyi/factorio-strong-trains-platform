@@ -167,8 +167,12 @@ end
 
 ---@param unit_number uint
 ---@return LuaEntity
-function main.replace_died_rolling_stock(unit_number)
+function main.try_replace_died_rolling_stock(unit_number)
     local destoyed_entity_data = main.get_destroyed_data(unit_number)
+
+    if not destoyed_entity_data then
+        return
+    end
 
     local destroyed_map = {
         ["locomotive"] = mod.defines.prototype.entity.destroyed_locomotive,

@@ -16,7 +16,7 @@ local function handle_on_train_changed_state(event)
 end
 
 local function handle_on_entity_destroyed(event)
-    main.replace_died_rolling_stock(event.unit_number)
+    main.try_replace_died_rolling_stock(event.unit_number)
 end
 
 local function handle_on_train_created(event)
