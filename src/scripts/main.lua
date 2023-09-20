@@ -294,7 +294,7 @@ function main.process_train_arrived(train)
     local force = get_train_force(train);
     local destination_station = main.get_train_station_for_destroyed_trains(surface, force)
 
-    if train.station.backer_name == destination_station.backer_name then
+    if destination_station and train.station.backer_name == destination_station.backer_name then
         if post_action == mod.defines.post_action.station_manual then
             train.manual_mode = true
             return
