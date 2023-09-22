@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 22. 09. 2023
+  Bugfixes:
+    - Not execute post action for trains without destroying rolling stock
+    - Fix showing changelog in game
+    - Check existing depot station for on_train_changed_state
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 18. 09. 2023
   Bugfixes:
