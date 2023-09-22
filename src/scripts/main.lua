@@ -311,7 +311,7 @@ end
 function main.post_train_action(train)
     local post_action = get_post_action_value()
 
-    if post_action == mod.defines.post_action.nothing then
+    if post_action == mod.defines.post_action.nothing or not is_train_has_destoyed_rolling_stock(train) then
         return
     end
 
