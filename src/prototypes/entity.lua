@@ -72,7 +72,7 @@ local platform_pictures = {
         }
     }
 }
-local destroyed_health_size = 30000
+local destroyed_health_size = 300000
 local destroyed_resistance = {
     {type = "physical", percent = 85},
     {type = "explosion",  percent = 85},
