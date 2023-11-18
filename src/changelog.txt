@@ -3,6 +3,8 @@ Version: 1.1.1
 Date: ?. ?. ?
   Compatibility:
     - Incompatibility with ick-automatic-train-repair
+  Changes:
+    - Make destroyed rolling stock little powerable and faster
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 16. 11. 2023

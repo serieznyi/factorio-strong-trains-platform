@@ -80,26 +80,28 @@ local destroyed_resistance = {
     {type = "fire", percent = 85},
     {type = "impact", percent = 85}
 }
-local destroyed_platform_weight = 200
 local prototypes = {}
 local prototype
+local original_prototype
 
 ------------- PROTOTYPE: Destroyed Locomotive
-prototype = table.deepcopy(data.raw["locomotive"]["locomotive"])
+original_prototype = data.raw["locomotive"]["locomotive"]
+
+prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_locomotive
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_locomotive} -- destroyed: get own item
 prototype.placeable_by = {item = prototype_defines.item.destroyed_locomotive, count = 1} -- destroyed: define own placeable
-prototype.create_ghost_on_death = false -- destroyed: without ghost
+prototype.create_ghost_on_death = false
 prototype.max_health = destroyed_health_size -- destroyed: make almost invulnerable
-prototype.weight = 1000 -- destroyed: 50% from original locomotive
-prototype.max_speed = 0.6 -- destroyed: 50% from original locomotive
-prototype.max_power = "300kW" -- destroyed: 50% from original locomotive
-prototype.reversing_power_modifier = 0.3 -- destroyed: 50% from original locomotive
+prototype.weight = original_prototype.weight * 0.5
+prototype.max_speed = original_prototype.max_speed * 0.75
+prototype.max_power = "450kW" -- destroyed: 75% from original locomotive
+prototype.reversing_power_modifier = original_prototype.reversing_power_modifier * 0.75
 prototype.resistances = destroyed_resistance -- destroyed: use high resistance for all
 prototype.is_military_target = false
 prototype.burner = {
     fuel_category = "chemical",
-    effectivity = 0.5, -- destroyed: 50% from original locomotive
+    effectivity = original_prototype.burner.effectivity * 0.75,
     fuel_inventory_size = 1, -- destroyed: only one slot for fuel
     smoke =
     {
@@ -180,13 +182,15 @@ prototype.selected_minimap_representation = get_strong_minimap_representation_se
 table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Wagon
-prototype = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
+original_prototype = data.raw["cargo-wagon"]["cargo-wagon"]
+
+prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_cargo_wagon
 prototype.inventory_size = 0 -- destroyed: no cargo
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_cargo_wagon}
 prototype.max_health = destroyed_health_size -- destroyed: make almost invulnerable
-prototype.weight = 500 -- destroyed: 50% from original wagon
-prototype.max_speed = 0.75 -- destroyed: 50% from original wagon
+prototype.weight = original_prototype.weight * 0.5
+prototype.max_speed = original_prototype.max_speed * 0.75
 prototype.resistances = destroyed_resistance
 prototype.is_military_target = false
 prototype.back_light = nil -- destroyed: no additional animation
@@ -216,14 +220,16 @@ prototype.selected_minimap_representation = get_strong_minimap_representation_se
 table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Fluid Wagon
-prototype = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
+original_prototype = data.raw["fluid-wagon"]["fluid-wagon"]
+
+prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_fluid_wagon
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_fluid_wagon}
 prototype.mined_sound = {filename = "__core__/sound/deconstruct-large.ogg",volume = 0.8}
 prototype.max_health = destroyed_health_size
 prototype.capacity = 0
-prototype.weight = destroyed_platform_weight
-prototype.max_speed = 1.5
+prototype.weight = original_prototype.weight * 0.5
+prototype.max_speed = original_prototype.max_speed * 0.75
 prototype.resistances = destroyed_resistance
 prototype.is_military_target = false
 prototype.back_light = nil
@@ -234,13 +240,15 @@ prototype.selected_minimap_representation = get_strong_minimap_representation_se
 table.insert(prototypes, prototype)
 
 ------------- PROTOTYPE: Destroyed Artillery Wagon
+original_prototype = data.raw["artillery-wagon"]["artillery-wagon"]
+
 prototype = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
 prototype.name = prototype_defines.entity.destroyed_artillery_wagon
 prototype.inventory_size = 1
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_artillery_wagon}
 prototype.max_health = destroyed_health_size
-prototype.weight = destroyed_platform_weight
-prototype.max_speed = 1.5
+prototype.weight = original_prototype.weight * 0.5
+prototype.max_speed = original_prototype.max_speed * 0.75
 prototype.resistances = destroyed_resistance
 prototype.is_military_target = false
 prototype.back_light = nil
