@@ -9,6 +9,7 @@
   "factorio_version": "1.1",
   "dependencies": [
     "base >= 1.1.46",
-    "flib >= 0.8.4"
+    "flib >= 0.8.4",
+    "!ick-automatic-train-repair"
   ]
 }
