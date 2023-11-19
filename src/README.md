@@ -13,6 +13,9 @@ After destroying locomotive/cargo wagon by enemy - it can move to destination wi
 - 🇺🇲 English / English
 - 🇷🇺 Russian / Русский
 
+### Integrated with mods
+- Space Exploration
+
 # Alternatives
 - [Automatic train repair](https://mods.factorio.com/mod/ick-automatic-train-repair)
 
