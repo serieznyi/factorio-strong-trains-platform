@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.1
-Date: ?. ?. ?
+Date: 19. 11. 2023
   Compatibility:
     - Incompatibility with ick-automatic-train-repair
   Changes:
