@@ -89,6 +89,7 @@ original_prototype = data.raw["locomotive"]["locomotive"]
 
 prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_locomotive
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/destroyed/locomotive.png"
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_locomotive} -- destroyed: get own item
 prototype.placeable_by = {item = prototype_defines.item.destroyed_locomotive, count = 1} -- destroyed: define own placeable
 prototype.create_ghost_on_death = false
@@ -186,6 +187,7 @@ original_prototype = data.raw["cargo-wagon"]["cargo-wagon"]
 
 prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_cargo_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/destroyed/wagon.png"
 prototype.inventory_size = 0 -- destroyed: no cargo
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_cargo_wagon}
 prototype.max_health = destroyed_health_size -- destroyed: make almost invulnerable
@@ -224,6 +226,7 @@ original_prototype = data.raw["fluid-wagon"]["fluid-wagon"]
 
 prototype = table.deepcopy(original_prototype)
 prototype.name = prototype_defines.entity.destroyed_fluid_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/destroyed/fluid-wagon.png"
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_fluid_wagon}
 prototype.mined_sound = {filename = "__core__/sound/deconstruct-large.ogg",volume = 0.8}
 prototype.max_health = destroyed_health_size
@@ -244,6 +247,7 @@ original_prototype = data.raw["artillery-wagon"]["artillery-wagon"]
 
 prototype = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
 prototype.name = prototype_defines.entity.destroyed_artillery_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/destroyed/artillery-wagon.png"
 prototype.inventory_size = 1
 prototype.minable = {mining_time = 0.5, result = prototype_defines.item.destroyed_artillery_wagon}
 prototype.max_health = destroyed_health_size
@@ -268,6 +272,7 @@ table.insert(prototypes, prototype)
 ------------- PROTOTYPE: Strong Cargo Wagon
 prototype = table.deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
 prototype.name = prototype_defines.entity.strong_cargo_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/strong/cargo-wagon.png"
 prototype.minable.result = prototype_defines.item.strong_cargo_wagon
 prototype.minimap_representation = get_strong_minimap_representation("strong", "cargo-wagon")
 prototype.selected_minimap_representation = get_strong_minimap_representation_selected("strong", "cargo-wagon")
@@ -276,6 +281,7 @@ table.insert(prototypes, prototype)
 ------------- PROTOTYPE: Strong Fluid Wagon
 prototype = table.deepcopy(data.raw["fluid-wagon"]["fluid-wagon"])
 prototype.name = prototype_defines.entity.strong_fluid_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/strong/fluid-wagon.png"
 prototype.minable.result = prototype_defines.item.strong_fluid_wagon
 prototype.minimap_representation = get_strong_minimap_representation("strong", "fluid-wagon")
 prototype.selected_minimap_representation = get_strong_minimap_representation_selected("strong", "fluid-wagon")
@@ -284,6 +290,7 @@ table.insert(prototypes, prototype)
 ------------- PROTOTYPE: Strong Artillery Wagon
 prototype = table.deepcopy(data.raw["artillery-wagon"]["artillery-wagon"])
 prototype.name = prototype_defines.entity.strong_artillery_wagon
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/strong/artillery-wagon.png"
 prototype.minable.result = prototype_defines.item.strong_artillery_wagon
 prototype.minimap_representation = get_strong_minimap_representation("strong", "artillery-wagon")
 prototype.selected_minimap_representation = get_strong_minimap_representation_selected("strong", "artillery-wagon")
@@ -292,6 +299,7 @@ table.insert(prototypes, prototype)
 ------------- PROTOTYPE: Strong Locomotive
 prototype = table.deepcopy(data.raw["locomotive"]["locomotive"])
 prototype.name = prototype_defines.entity.strong_locomotive
+prototype.icon = "__StrongTrainsPlatform__/graphics/item/strong/locomotive.png"
 prototype.minable.result = prototype_defines.item.strong_locomotive
 prototype.minimap_representation = get_strong_minimap_representation("strong", "locomotive")
 prototype.selected_minimap_representation = get_strong_minimap_representation_selected("strong", "locomotive")

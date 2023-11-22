@@ -3,6 +3,7 @@ local flib_train = require("__flib__.train")
 local main = {}
 
 ---@return LuaSurface
+---@param train LuaTrain
 local function get_train_surface(train)
     return train.carriages[1].surface
 end
@@ -152,6 +153,7 @@ function main.register_died_rolling_stock(entity)
         direction = entity.direction,
         force = entity.force,
         orientation = entity.orientation,
+        bounding_box = entity.bounding_box,
         surface = entity.surface,
         fuels = fuel_inventory ~= nil and fuel_inventory.get_contents() or nil
     }
@@ -181,6 +183,45 @@ function main.try_replace_died_rolling_stock(unit_number)
         ["artillery-wagon"] = mod.defines.prototype.entity.destroyed_artillery_wagon,
     }
     local destroyed_entity_name = destroyed_map[destoyed_entity_data.type]
+
+    local rotate_relative_position = {
+        [defines.direction.north] = function(x, y)
+            return x, y
+        end,
+        [defines.direction.east] = function(x, y)
+            return y * -1, x
+        end,
+        [defines.direction.south] = function(x, y)
+            return x * -1, y * -1
+        end,
+        [defines.direction.west] = function(x, y)
+            return y, x * -1
+        end,
+    }
+
+    rotate_relative_position[destoyed_entity_data.direction]()
+
+    -- clear place for destroyed rolling stock
+
+    local p = destoyed_entity_data.position
+    log(p)
+    --game.get_player(1).print(serpent.block(destoyed_entity_data.bounding_box))
+    --local area = {
+    --    {
+    --        rotate_relative_position[destoyed_entity_data.direction](p.x + 3),
+    --        rotate_relative_position[destoyed_entity_data.direction](p.y + 1),
+    --    },
+    --    {
+    --        rotate_relative_position[destoyed_entity_data.direction](p.x - 3),
+    --        rotate_relative_position[destoyed_entity_data.direction](p.y - 1),
+    --    }
+    --}
+
+    local entities = destoyed_entity_data.surface.find_entities(destoyed_entity_data.bounding_box)
+
+    for _, e in ipairs(entities) do
+        log(e.name)
+    end
 
     local new_rolling_stock = destoyed_entity_data.surface.create_entity({
         name = destroyed_entity_name,
